@@ -7,15 +7,17 @@ Game title:
 let config = {
     type: Phaser.AUTO,
     width: 640,
-    height: 480,
+    height: 720,
     physics:{
         default: 'arcade',
         arcade:{
-            debug: true
+            debug: false
         }
     },
-    scene: [ Menu, Play, End ]
+    scene: [ Load, Menu, Play, Credit, End ]
 }
 
 let game = new Phaser.Game(config)
+let { width, height } = game.config
+let keyPUASE, keyRESET, keyLEFT, keyRIGHT, keyUP, keyDOWN, keyENTER
 

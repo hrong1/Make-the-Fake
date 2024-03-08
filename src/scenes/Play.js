@@ -1,9 +1,11 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene")
+        this.bullets;
+        this.ship;
     }
     init() {
-       
+       this.end = 1;
     }
 
     preload(){
@@ -11,10 +13,20 @@ class Play extends Phaser.Scene {
     }
 
     create(){
-        
+        this.starfield = this.add.tileSprite(0, 0, 640, 720, 'starfield').setOrigin(0, 0)
+
+        this.ship = this.add.image(10, 10, 'spaceship')
+        this.bullets = new Bullets(this);
+        this.input.on('pointermove', (pointer) =>
+        {
+            this.ship.x = pointer.x;
+            this.ship.y = pointer.y;
+
+        });
     }
 
     update(){
-       
+        this.starfield.tilePositionY -= 4;
+        this.bullets.fireBullet(this.ship.x, this.ship.y);
     }
 }
