@@ -26,11 +26,19 @@ class End extends Phaser.Scene {
         this.rectangleA.setStrokeStyle(4, 0xffffff);
         this.rectangleB.setStrokeStyle(4, 0xffffff);
         this.rectangleC.setStrokeStyle(4, 0xffffff);
-        this.add.text(320, 300, 'Game End', menuConfig).setOrigin(0.5)
-        this.add.text(320, 400, 'Thanks for Play', menuConfig).setOrigin(0.5)
-        this.add.text(320, 500, 'R to back menu', menuConfig).setOrigin(0.5)
+        this.s = this.add.text(320, 300, 'Game End', menuConfig).setOrigin(0.5)
+        this.h = this.add.text(320, 400, 'Thanks for Play', menuConfig).setOrigin(0.5)
+        this.add.text(320, 500, 'Click to back Select', menuConfig).setOrigin(0.5)
         // define keys
         keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        this.s.text = "score: " + score 
+        this.h.text = "Highest Score: " + hscore
+        this.input.on('pointerdown', () =>
+            {
+                this.scene.stop("endScene")
+                this.scene.launch('sceneSelect')
+                this.sound.play('blip-select');
+            })
     }
 
     update() {
@@ -38,7 +46,7 @@ class End extends Phaser.Scene {
         // input select
         if (Phaser.Input.Keyboard.JustDown(keyRESET)) {
             this.scene.stop("endScene")
-            this.scene.launch('menuScene')
+            this.scene.launch('sceneSelect')
 
         }
     }

@@ -13,6 +13,8 @@ class Menu extends Phaser.Scene {
     create(){
         //Load background
         this.starfield = this.add.tileSprite(0, 0, 640, 720, 'starfield').setOrigin(0, 0)
+        //title
+        this.add.image(360, 300, 'title').setScale(0.5)
         // grab keyboard binding from Keys scene
         let menuConfig = {
             frontFamily: 'Conrier',
@@ -51,9 +53,10 @@ class Menu extends Phaser.Scene {
             this.input.on('pointerdown', () =>
             {
                 if (this.sceneselect == 1){
+                    //this.menubgm.stop()
                     this.sound.play('blip-select');
                     this.scene.stop("menuScene")
-                    this.scene.launch('playScene')
+                    this.scene.launch('sceneSelect')
                 }
             })
          });
@@ -66,6 +69,7 @@ class Menu extends Phaser.Scene {
             this.input.on('pointerdown', () =>
             {
                 if (this.sceneselect == 2){
+                    //this.menubgm.stop()
                     this.sound.play('blip-select');
                     this.scene.stop("menuScene")
                     this.scene.launch('creditScene')
@@ -81,6 +85,7 @@ class Menu extends Phaser.Scene {
             this.input.on('pointerdown', () =>
             {
                 if (this.sceneselect == 3){
+                    this.menubgm.stop()
                     this.sound.play('blip-select');
                     this.scene.stop("menuScene")
                     game.destroy(true, false)
@@ -107,11 +112,20 @@ class Menu extends Phaser.Scene {
 
             }
          });
-         
+         // music
+        this.menubgm = this.sound.add('menubgm', {
+            loop: true 
+            })
+        this.menubgm.play()
+        this.sound.stopByKey('playbgm');
+        // stop by key from
+        //https://phaser.discourse.group/t/how-do-i-start-music-in-one-scene-and-stop-it-in-another/6032/6
     }
 
     update() {
         this.starfield.tilePositionY -= 4;
+        this.sound.stopByKey('playbgm');
+        this.sound.stopByKey('bossbgm');
         // input select
         if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.sound.play('sfx-select')
